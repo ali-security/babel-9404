@@ -82,6 +82,12 @@ describe("evaluation", function () {
     assert.strictEqual(eval_invalid_call.confident, false);
   });
 
+  it("should not evaluate inherited methods", function () {
+    const path = getPath("Math.hasOwnProperty('min')");
+    const evalResult = path.get("body.0.expression").evaluate();
+    assert.strictEqual(evalResult.confident, false);
+  });
+
   it("it should not deopt vars in different scope", function () {
     const input = "var a = 5; function x() { var a = 5; var b = a + 1; } var b = a + 2";
     assert.strictEqual(
