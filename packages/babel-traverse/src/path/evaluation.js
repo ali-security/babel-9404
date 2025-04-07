@@ -351,7 +351,7 @@ export function evaluate(): { confident: boolean; value: any } {
           const key = property.node.name;
           // TODO(Babel 8): Use Object.hasOwn
           if (Object.hasOwnProperty.call(context, key)) {
-            func = context[key as keyof typeof context];
+            func = context[key];
           }
         }
 
