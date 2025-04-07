@@ -152,4 +152,10 @@ describe("evaluation", function () {
     assert.strictEqual(eval_undef.deopt.type, "VariableDeclarator");
     assert.strictEqual(eval_undef.deopt.parentPath.node.kind, "let");
   });
+
+  it("should not evaluate inherited methods", function () {
+    const path = getPath("Math.hasOwnProperty('min')");
+    const evalResult = path.get("body.0.expression").evaluate();
+    assert.strictEqual(evalResult.confident, false);
+  });
 });

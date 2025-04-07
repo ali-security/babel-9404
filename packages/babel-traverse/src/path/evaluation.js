@@ -348,7 +348,11 @@ export function evaluate(): { confident: boolean; value: any } {
           INVALID_METHODS.indexOf(property.node.name) < 0
         ) {
           context = global[object.node.name];
-          func = context[property.node.name];
+          const key = property.node.name;
+          // TODO(Babel 8): Use Object.hasOwn
+          if (Object.hasOwnProperty.call(context, key)) {
+            func = context[key as keyof typeof context];
+          }
         }
 
         // "abc".charCodeAt(4)
